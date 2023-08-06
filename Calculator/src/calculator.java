@@ -1,3 +1,9 @@
+/*
+ * Brian Johnson
+ * Assignment 2
+ * Infix Calculator
+ * Updated with GUI
+ */
 import java.awt.Color;
 import java.awt.event.*;
 import java.util.*;
@@ -87,6 +93,8 @@ public class calculator implements ActionListener{
 		equal.addActionListener(c);
 		
 	}
+	//this method is to see the precedence of two operators
+	//it resturns true if oper2 is higher or same as oper1, else it is false
 public static boolean precedence(char oper1, char oper2) {
 		
 		if(oper2 == '(' || oper1 == ')') {
@@ -101,24 +109,36 @@ public static boolean precedence(char oper1, char oper2) {
 
 
 public static double calc1(char[] ops) {
+	/*=============================================
+	* OPERANDS (this section deals with values)
+	=============================================*/
+	//if the element is a space, it skips it
 	for(int i = 0; i<ops.length;i++) {
 		if(ops[i] == ' ') {
 			continue;
 		}
+		//checks to see if the element is a number, then adds it to the "vals" stack
 		if(ops[i] >= '0' && ops[i] <= '9' || ops[i] == '.') {
+			//creates a StringBuffer to be able to manipulate the characters
 			StringBuffer sb = new StringBuffer();
+			//checks if the number has multiple digits
 			while(i<ops.length && ops[i] >= '0' && ops[i] <= '9') {
-				sb.append(ops[i++]);
+				sb.append(ops[i++]); //appends the next element
+				//converts the element to a string, and then to an integer, then it is added to the vals stack
 				vals.push(Double.parseDouble(sb.toString()));
 			}
-			i--;
-		} else if (ops[i] == '(') {
-			opers.push(ops[i]);
-		} else if (ops[i] == ')') {
+			i--; //since we increased the spot of i, we have to put it back
+		
+		/*=================================================
+		 * OPERATORS and CALCULATION (this section deals with the calculation)
+		 =================================================*/
+		} else if (ops[i] == '(') { //if element is open parentheses, add to opers stack
+			opers.push(ops[i]); //adds to opers stack
+		} else if (ops[i] == ')') { //if element is close parentheses, solve whats in it
 			while(opers.peek() != '(' ) {
 				vals.push(calc2(opers.pop(), vals.pop(),vals.pop()));
 			}
-			opers.pop();
+			opers.pop(); //pops parentheses out of stack
 		} else if (ops[i] == '*' || ops[i] == '/' || ops[i] == '+' || ops[i] == '-') {
 			while(!opers.empty() && precedence(ops[i], opers.peek())) {
 				//calls the "calc" menthod with given parameters
@@ -137,6 +157,7 @@ public static double calc1(char[] ops) {
 	return vals.pop();
 
 }
+//this method calculates the result between an operand and two values and returns it
 public static double calc2(char op, double val1, double val2) {
 	//in try catch block to handle a divide by zero case
 	try {
@@ -159,6 +180,7 @@ public static double calc2(char op, double val1, double val2) {
 }
 
 	@Override
+	//this method is for button actions
 	public void actionPerformed(ActionEvent e) {
 		String exp = e.getActionCommand();
 		
