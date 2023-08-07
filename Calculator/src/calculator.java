@@ -2,9 +2,11 @@
  * Brian Johnson
  * Assignment 2
  * Infix Calculator
- * Updated with GUI
+ * Updated with GUI 2023
  */
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.*;
 import java.util.*;
 
@@ -38,44 +40,57 @@ public class calculator implements ActionListener{
 	public static JButton dec = new JButton(".");
 	public static JButton clear = new JButton("C");
 	public static JButton equal = new JButton("=");
+	public static JButton open = new JButton("(");
+	public static JButton close = new JButton(")");
+	public static JButton del = new JButton("");
 
-	String op, val1, val2;
+	String v1, v2, v3;
 	
 	calculator() {
-		op = val1 = val2 = "";
+		v1 = v2 = v3 = "";
 	}
 	
 	public static void main(String[] args) {
+		Font myFont = new Font("Arial",Font.BOLD,30);
 		f = new JFrame("Infix Calculator");
+		f.setLayout(null);
 		l = new JTextField(16);
+		l.setFont(myFont);
 		l.setEditable(false);
 		JPanel p = new JPanel();
-		p.setBackground(Color.gray);
-		f.add(p);
-		f.setSize(300,300);
-		f.show();
+		p.setBounds(0,75,350,300);
+		p.setLayout(new GridLayout(5,4,10,10));
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		l.setBounds(0, 0, 350, 79);
+		f.setResizable(false);
 		calculator c = new calculator();
 		
-		p.add(l);
-		p.add(zero);
+		f.add(l);
+		p.add(open);
+		p.add(clear);
+		p.add(close);
+		p.add(del);
 		p.add(one);
 		p.add(two);
 		p.add(three);
+		p.add(add);
 		p.add(four);
 		p.add(five);
 		p.add(six);
+		p.add(sub);
 		p.add(seven);
 		p.add(eight);
 		p.add(nine);
-		p.add(add);
-		p.add(sub);
-		p.add(mul);
-		p.add(div);
 		p.add(equal);
-		p.add(clear);
+		p.add(mul);
 		p.add(dec);
+		p.add(zero);
+		p.add(equal);
+		p.add(div);
+	
 		
 		one.addActionListener(c);
+		zero.addActionListener(c);
 		two.addActionListener(c);
 		three.addActionListener(c);
 		four.addActionListener(c);
@@ -91,6 +106,13 @@ public class calculator implements ActionListener{
 		clear.addActionListener(c);
 		dec.addActionListener(c);
 		equal.addActionListener(c);
+		open.addActionListener(c);
+		close.addActionListener(c);
+		//del.addActionListener(c);
+
+		f.add(p);
+		f.setSize(350,400);
+		f.show();
 		
 	}
 	//this method is to see the precedence of two operators
@@ -166,15 +188,15 @@ public static double calc2(char op, double val1, double val2) {
 	case '*':
 		return val1 * val2;
 	case '/':
-		return val1 / val2;
+		return val2 / val1;
 	case '+':
 		return val1 + val2;
 	case '-':
-		return val1 - val2;
+		return val2 - val1;
 	}
 	//prints error
 	}catch (Exception e) {
-		System.out.println("Error: Cannot divide by zero");
+		System.out.println("Error");
 	}
 	return 0;
 }
@@ -184,29 +206,23 @@ public static double calc2(char op, double val1, double val2) {
 	public void actionPerformed(ActionEvent e) {
 		String exp = e.getActionCommand();
 		
-		if ((exp.charAt(0) >= '0' && exp.charAt(0) <= '9') || exp.charAt(0) == '.' || exp.charAt(0) == '+'|| exp.charAt(0) == '-'|| exp.charAt(0) == '*'|| exp.charAt(0) == '/') {
-            
-            if (!val1.equals(""))
-                val2 = val2 + exp;
+		if ((exp.charAt(0) >= '0' && exp.charAt(0) <= '9') || exp.charAt(0) == '.' || exp.charAt(0) == '+'|| exp.charAt(0) == '-'|| exp.charAt(0) == '*'|| exp.charAt(0) == '/' || exp.charAt(0) == '(' || exp.charAt(0) == ')') {
+            if (!v2.equals(""))
+                v3 = v3 + exp;
             else
-                op = op + exp;
- 
-            
-            l.setText(op + val1 + val2);
+                v1 = v1 + exp;
+            l.setText(v1 + v2 + v3);
         }
         else if (exp.charAt(0) == 'C') {
-            
-            op = val1 = val2 = "";
- 
-            
-            l.setText(op + val1 + val2);
+            v1 = v2 = v3 = "";
+            l.setText(v1 + v2 + v3);
         } else if (exp.charAt(0) == '=') {
         	String screen = l.getText();
         	char[] ops = screen.toCharArray();
         	double result = calc1(ops);
         	String result2 = Double.toString(result);
         	l.setText(result2);
-        }
+        } 
 		
 	}
 
