@@ -9,7 +9,7 @@ This infix calculator was an assignment in my Data Structures course in Fall 202
 - [ ] Users can clear screen
 - [ ] Users can perform operations to the previous answer
 
-![Video Walkthrough](https://imgur.com/a/gnRuiLv)
+![Calculator](https://imgur.com/a/gnRuiLv.png)
 
 ## License
 
