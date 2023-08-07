@@ -6,8 +6,8 @@ This infix calculator was an assignment in my Data Structures course in Fall 202
 
 # Features
 - [ ] Users can perform basic calculator operations
-- [ ] Users can clear screen
-- [ ] Users can perform operations to the previous answer
+- [ ] Users can clear the screen
+- [ ] Users can perform operations on the previous answer
 
 ![Calculator](https://imgur.com/a/gnRuiLv.png)
 
