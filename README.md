@@ -10,6 +10,7 @@ This infix calculator was an assignment in my Data Structures course in Fall 202
 - [ ] Users can perform operations on the previous answer
 
 ![Calculator](https://imgur.com/a/gnRuiLv.png)
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/gnRuiLv" data-context="false" ><a href="//imgur.com/a/gnRuiLv"></a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 
 ## License
 
